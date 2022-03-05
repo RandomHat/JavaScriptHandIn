@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 25px;
+            height: 25px;
+            border: 1px #5b0077 solid;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="d1"></div>
+    <div id="d2"></div>
+    <div id="d3"></div>
+
+    <button id="btn">Click me!</button>
+
+    <script>
+        function setColors(){
+            const divs = document.querySelectorAll("div");
+            divs[0].style.backgroundColor="green"
+            divs[1].style.backgroundColor="yellow"
+            divs[2].style.backgroundColor="red"
+        }
+
+        const btn = document.getElementById("btn");
+        btn.onclick = setColors
+
+        /*
+        const divs = document.querySelectorAll("div");
+        divs.forEach(d => setColor(d));
+        //*/
+    </script>
+</body>
+</html>

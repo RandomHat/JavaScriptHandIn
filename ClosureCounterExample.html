@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<button onclick="test1()">Count counter1</button>
+<span id="c1"></span>
+<button onclick="test2()" >Count counter2</button>
+<span id="c2"></span>
+    
+<script>
+    function makeCounter(){
+        var privateCounter = 0;
+        function changeBy(val){
+            privateCounter += val;
+        }
+        return {
+            increment : function() {changeBy(1)},
+            decrement : function() {changeBy(-1)},
+            value : function() {return privateCounter}
+        }
+    }
+
+    var counter1 = makeCounter();
+    var counter2 = makeCounter();
+
+    function test1(){
+        counter1.increment();
+        document.getElementById("c1").innerText = counter1.value();
+    }
+    function test2(){
+        counter2.increment();
+        document.getElementById("c2").innerText = counter2.value();
+    }
+
+    var makePerson = function (){
+        var _name;
+        var _age;
+
+        function _setName(name){_name = name};
+        function _setAge(age){_age = age};
+        function _getName(){return _name;}
+        function _getAge(){return _age}
+        return {
+            setName : function (name){_setName(name)},
+            setAge : function (age){_setAge(age)},
+            getInfo : function (){console.log(`Name is ${_getName()}, age is ${_getAge()}`)}
+        }
+    }
+
+    let person1 = makePerson();
+    person1.setName("Per")
+    person1.setAge(45)
+    person1.getInfo()
+</script>
+</body>
+</html>

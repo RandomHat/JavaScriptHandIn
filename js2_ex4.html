@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Document</title>
+
+</head>
+<body>
+
+<table id="my-table" class="table"></table>
+    
+<div>
+    <label for="input">Price:</label>
+    <input id="input">
+    <button id="less-btn">Price less than</button>
+    <button id="make-btn">Filter by make</button>
+    <button id="clear-btn">clear</button>
+    
+</div>
+
+    <script>
+        const cars = [
+            {id: 1, year: 1997, make:'Ford', model:'E350', price: 3000},
+            {id: 2, year: 1999, make:'Chevy', model:'Venture', price: 4900},
+            {id: 3, year: 2000, make:'Chevy', model:'Venture', price: 5000},
+            {id: 4, year: 1996, make:'Jeep', model:'Grand Cherokee', price:4799},
+            {id: 5, year: 2005, make:'Volvo', model:'V70', price:44799},
+        ];
+
+        // Doesn't Work because we redraw the table including the headers every time.
+        const reverseSort = (id) => {
+            let element = document.getElementById(id);
+            if (element.hasAttribute("reverse-sort")){
+                element.remove("reverse-sort")
+            } else {
+                element.setAttribute("reverse-sort", "")
+            }
+            return element.hasAttribute("reverse")
+        }
+
+        var reverse = false
+        
+        const createTable = (array) => {
+            if(array.length === 0){
+                return "";
+            }
+            let result = "<tr>" + Object.keys(array[0]).map(key =>`<th id="h-${key}">${key}</th>`).join("") + "</tr>";
+            result += array.map(element => "<tr>" + Object.values(element).map(val => `<td>${val}</td>`).join("")+ "</tr>").join("")
+            return result;
+        }
+        
+        const filterByPrice = (array, price) => array.filter(element => element.price < price);
+
+        const sortDirection = (reverse) => {
+            if (reverse){
+                return (a,b) => direction = b.price - a.price;
+            }
+            return (a,b) => a.price - b.price;
+        }
+
+        const sortByPrice = (array, reverse) => {
+            let direction = sortDirection(reverse);
+            return [...array].sort(direction);
+        }
+
+        const filterByMake = (array, make) => array.filter(element => element.make === make);
+
+        const clearInput = () => {
+            document.getElementById("input").value = "";
+            draw("my-table", cars)
+        }
+
+        // Onclick moved inside because we redraw the header every time. Possible refactor is to create a function that re-adds onclick events to all redrawn headers.
+        const draw = (id, array) => {
+            document.getElementById(id).innerHTML = createTable(array);
+            document.getElementById("h-price").onclick = () => { 
+                draw("my-table", sortByPrice(cars, reverse));
+                reverse = !reverse;
+            }
+        }
+        
+        const getInput = () => document.getElementById("input").value;
+        
+        function out(obj){
+            console.log(obj);
+        }
+        
+        draw("my-table", cars)
+
+        document.getElementById("less-btn").onclick = () => draw("my-table", filterByPrice(cars, getInput()));
+
+        document.getElementById("make-btn").onclick = () => draw("my-table", filterByMake(cars, getInput()));
+
+        document.getElementById("clear-btn").onclick = clearInput;    
+        
+    </script>
+</body>
+</html>

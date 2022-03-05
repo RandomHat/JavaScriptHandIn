@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<ul id="my-ul"></ul>
+
+<form>
+    <input type="text" id="txt"/>
+    <button type="button" id="load-btn">load</button>
+    <button id="add-btn">Add Name</button>
+    <button id="remove-first-btn">Remove First</button>
+    <button id="remove-last-btn">Remove Last</button>
+</form>
+
+<script>
+    const names=["Amanda", "Christian", "Mark", "Simon", "Lars"];
+    
+    const makeListItems = () => {
+        const listItems = names.map(name => `<li>${name}</li>`).join("\n");
+        document.getElementById("my-ul").innerHTML = listItems;
+    }
+   
+    document.getElementById("add-btn").onclick = function addName(evt){
+        evt.preventDefault();
+        //få value
+        const newName = document.getElementById("txt").value;
+        // append value til array
+        names.push(newName);
+        makeListItems();
+    }
+
+    document.getElementById("remove-first-btn").onclick = (evt) => {
+        evt.preventDefault();
+        names.shift();
+        makeListItems();
+    }
+
+    document.getElementById("remove-last-btn").onclick = (evt) => {
+        evt.preventDefault();
+        names.pop();
+        makeListItems();
+    }
+
+    document.getElementById("load-btn").onclick = makeListItems;
+</script>
+</body>
+</html>

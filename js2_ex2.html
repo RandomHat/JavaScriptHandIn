@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .mydiv {width: 25px; height: 25px;background-color:yellow; margin:1px;}
+    </style>
+</head>
+<body>
+
+<div id="outer">
+    <div id="d1" class="mydiv"></div>
+    <div id="d2" class="mydiv"></div>
+    <div id="d3" class="mydiv"></div>
+    <div id="d4" class="mydiv"></div>
+    <div id="d5" class="mydiv"></div>
+    <div id="d6" class="mydiv"></div>
+    <div id="d7" class="mydiv"></div>
+    <div id="d8" style="display: grid" class="mydiv">
+        <div id="innerdiv" style="background-color: red; width:10px; height: 10px; align-self: center;"></div>
+    </div>
+    <div id="d9" class="mydiv"></div>
+    <div id="d10" class="mydiv"></div>
+</div>
+
+<p id="listener"></p>
+
+<script>
+    document.getElementById("outer").onclick = (e) => {
+        if(e.target.id === "outer"){
+            return
+        }
+        document.getElementById("listener").innerText = e.target.id
+        }
+</script>
+</body>
+</html>
